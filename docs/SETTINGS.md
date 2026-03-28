@@ -28,7 +28,15 @@ chmod +x ~/.claude/statusline.sh
 }
 ```
 
-## Step 3. 세션 컬러 설정
+## Step 3. 글로벌 규칙 적용
+
+`docs/RULES.md`를 `~/.claude/CLAUDE.md`로 복사하세요.
+
+```bash
+cp docs/RULES.md ~/.claude/CLAUDE.md
+```
+
+## Step 4. 세션 컬러 설정
 
 Claude Code 세션 내에서 `/color pink`를 실행하세요.
 

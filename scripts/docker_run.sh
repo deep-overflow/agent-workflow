@@ -14,7 +14,8 @@ docker run \
   -v /media/data2:/media/data2 \
   -v /media/data3:/media/data3 \
   -v "$HOME/.cache:/home/$(whoami)/.cache" \
-  -v "$(pwd)/.gitconfig_docker:/home/$(whoami)/.gitconfig:ro" \
+  -v "$(pwd)/.gitconfig:/home/$(whoami)/.gitconfig" \
+  -v "$(pwd)/.claude:/home/$(whoami)/.claude" \
   --gpus all \
   --ipc=host \
   --network=host \
