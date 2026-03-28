@@ -7,10 +7,10 @@
 
 ## Step 1. Status Line 스크립트 배포
 
-이 파일과 같은 디렉토리에 있는 `statusline.sh`를 `~/.claude/statusline.sh`로 복사하고 실행 권한을 부여하세요.
+`scripts/statusline.sh`를 `~/.claude/statusline.sh`로 복사하고 실행 권한을 부여하세요.
 
 ```bash
-cp /workspace/agent-workflow/statusline.sh ~/.claude/statusline.sh
+cp scripts/statusline.sh ~/.claude/statusline.sh
 chmod +x ~/.claude/statusline.sh
 ```
 
