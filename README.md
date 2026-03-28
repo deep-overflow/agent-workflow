@@ -4,6 +4,8 @@
 
 ## Quick Start
 
+레포를 클론한 후, 아래 순서대로 실행하세요.
+
 ```bash
 # 1. Docker 이미지 빌드
 docker build -t claude-agent docker/
@@ -11,8 +13,11 @@ docker build -t claude-agent docker/
 # 2. 컨테이너 실행
 bash scripts/docker_run.sh
 
-# 3. (컨테이너 내) Claude Code statusline 세팅
-# docs/SETTINGS.md의 지시를 따르거나 Claude Code에게 읽게 하세요
+# 3. (컨테이너 내) Claude Code 로그인
+claude login
+
+# 4. (컨테이너 내) Claude Code statusline 세팅
+#    docs/SETTINGS.md의 지시를 따르거나 Claude Code에게 읽게 하세요
 ```
 
 ## 구조
