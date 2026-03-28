@@ -42,3 +42,4 @@ agent-workflow/
 |---|---|
 | [docs/DOCKER.md](docs/DOCKER.md) | 새 서버에서 Docker 환경을 처음 세팅할 때 |
 | [docs/SETTINGS.md](docs/SETTINGS.md) | 컨테이너 안에서 Claude Code statusline 등 설정을 적용할 때 |
+| [docs/RULES.md](docs/RULES.md) | Claude Code 연구 워크플로우 규칙을 `~/.claude/CLAUDE.md`에 적용할 때 |
