@@ -44,13 +44,24 @@ export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
     "command": "bash ~/.claude/statusline.sh"
   },
   "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/notify-slack.sh \"🔔 Claude Code: 작업이 완료되었습니다. 확인해주세요.\""
+          }
+        ]
+      }
+    ],
     "Notification": [
       {
         "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "bash ~/.claude/notify-slack.sh \"🔔 Claude Code 알림: $CLAUDE_NOTIFICATION\""
+            "command": "bash ~/.claude/notify-slack.sh \"🔔 Claude Code: 알림이 있습니다. 확인해주세요.\""
           }
         ]
       }
@@ -63,9 +74,10 @@ export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
 
 | 이벤트 | 트리거 시점 |
 |---|---|
-| `Notification` | Claude가 사용자 입력을 기다릴 때 (도구 승인 요청, 질문, 작업 완료 등) |
+| `Stop` | Claude가 작업을 마치고 사용자 입력을 기다릴 때 |
+| `Notification` | Claude Code가 알림을 보낼 때 |
 
-`matcher`가 빈 문자열이면 모든 Notification에 매칭됩니다.
+`matcher`가 빈 문자열이면 해당 이벤트의 모든 경우에 매칭됩니다.
 
 ## Step 4. 글로벌 규칙 적용
 
