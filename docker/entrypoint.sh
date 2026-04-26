@@ -21,11 +21,11 @@ ensure_group() {
 
 ensure_user() {
     if id -u "${TARGET_USER}" >/dev/null 2>&1; then
-        usermod --uid "${TARGET_UID}" --gid "${TARGET_GID}" --home "${TARGET_HOME}" --shell /bin/bash "${TARGET_USER}"
+        usermod --uid "${TARGET_UID}" --gid "${TARGET_GID}" --home "${TARGET_HOME}" --shell /bin/bash "${TARGET_USER}" 2>/dev/null || true
     elif getent passwd "${TARGET_UID}" >/dev/null; then
         existing_user="$(getent passwd "${TARGET_UID}" | cut -d: -f1)"
-        usermod --login "${TARGET_USER}" --home "${TARGET_HOME}" --move-home --shell /bin/bash "${existing_user}"
-        usermod --gid "${TARGET_GID}" "${TARGET_USER}"
+        usermod --login "${TARGET_USER}" --home "${TARGET_HOME}" --move-home --shell /bin/bash "${existing_user}" 2>/dev/null || true
+        usermod --gid "${TARGET_GID}" "${TARGET_USER}" 2>/dev/null || true
     else
         useradd --uid "${TARGET_UID}" --gid "${TARGET_GID}" --home "${TARGET_HOME}" --create-home --shell /bin/bash "${TARGET_USER}"
     fi
@@ -42,5 +42,20 @@ prepare_home() {
 ensure_group
 ensure_user
 prepare_home
+
+NPM_GLOBAL="${TARGET_HOME}/.npm-global"
+mkdir -p "${NPM_GLOBAL}"
+chown "${TARGET_UID}:${TARGET_GID}" "${NPM_GLOBAL}"
+
+if ! gosu "${TARGET_UID}:${TARGET_GID}" bash -c "NPM_CONFIG_PREFIX=${NPM_GLOBAL} PATH=${NPM_GLOBAL}/bin:\$PATH command -v claude" &>/dev/null; then
+    gosu "${TARGET_UID}:${TARGET_GID}" bash -c "NPM_CONFIG_PREFIX=${NPM_GLOBAL} npm install -g @anthropic-ai/claude-code"
+fi
+
+cat >> "${TARGET_HOME}/.bashrc" << EOF
+export NPM_CONFIG_PREFIX=${NPM_GLOBAL}
+export PATH=${NPM_GLOBAL}/bin:\$PATH
+EOF
+
+chown "${TARGET_UID}:${TARGET_GID}" "${TARGET_HOME}/.bashrc"
 
 exec gosu "${TARGET_UID}:${TARGET_GID}" "$@"

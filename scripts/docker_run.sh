@@ -10,16 +10,15 @@ docker run \
   -e HOST_GROUP_ID="$(id -g)" \
   -e HOST_USER_NAME="$(whoami)" \
   -v "$(pwd):/workspace" \
-  -v /media/data1:/media/data1 \
-  -v /media/data2:/media/data2 \
-  -v /media/data3:/media/data3 \
+  -v /mnt/sda1:/mnt/sda1 \
+  -v /mnt/nvme1n1:/mnt/nvme1n1 \
   -v "$HOME/.cache:/home/$(whoami)/.cache" \
   -v "$(pwd)/.gitconfig:/home/$(whoami)/.gitconfig" \
   -v "$(pwd)/.claude:/home/$(whoami)/.claude" \
+  -v "$HOME/.npm-global:/home/$(whoami)/.npm-global" \
   --gpus all \
   --ipc=host \
   --network=host \
-  -v /etc/localtime:/etc/localtime:ro \
   -w /workspace \
   -it \
   "${IMAGE_NAME}"
